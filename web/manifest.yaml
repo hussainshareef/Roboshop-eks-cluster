@@ -36,7 +36,7 @@ metadata:
   name: web
   namespace: roboshop
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: web
     project: roboshop
