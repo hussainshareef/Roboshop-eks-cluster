@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue
+  namespace: roboshop
+  labels:
+    app: catalogue
+    project: roboshop
+    tier: db
+spec:
+  replicas: 1
+  selector:
+    matchLables:
+      app: catalogue
+      project: roboshop
+      tier: db
+    
