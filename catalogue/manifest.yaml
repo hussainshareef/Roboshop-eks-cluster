@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalogue
+  namespace: roboshop
+data:
+  MONGO: true
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,12 +15,41 @@ metadata:
   labels:
     app: catalogue
     project: roboshop
-    tier: db
+    tier: app
 spec:
   replicas: 1
   selector:
     matchLables:
       app: catalogue
       project: roboshop
-      tier: db
-    
+      tier: app
+  template:
+    metadata:
+      labels: # these labels are pod labels
+        app: catalogue
+        project: roboshop
+        tier: app 
+    spec:
+      containers:
+      - name: catalogue
+        image: hussainshareef/catalogue:v1
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: catalogue
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogue
+  namespace: roboshop
+spec:
+  selector:
+    app: catalogue
+    project: roboshop
+    tier: app
+  ports:
+  - protocol: TCP
+    port: 8080 #service-port
+    targetPort: 8080 #container-port
