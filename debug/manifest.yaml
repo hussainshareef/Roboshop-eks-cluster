@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: Debug
+  name: debug
   namespace: roboshop
 spec:
   containers:
-  - name: Debug
+  - name: debug
     image: hussainshareef/debug:v1
     command: ["sleep", "100000"]
