@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: roboshop
+  labels:
+    app: web
+    project: roboshop
+    tier: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      project: roboshop
+      tier: web
+  template:
+    metadata:
+      labels: # these labels are pod labels
+        app: web
+        project: roboshop
+        tier: web 
+    spec:
+      containers:
+      - name: web
+        image: hussainshareef/web:v1
+        imagePullPolicy: Always
+        # envFrom:
+        # - configMapRef:
+        #     name: catalogue
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: roboshop
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+    project: roboshop
+    tier: web
+  ports:
+  - protocol: TCP
+    port: 80 #service-port
+    targetPort: 80 #container-port
