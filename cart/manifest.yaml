@@ -27,7 +27,7 @@ spec:
   template:
     metadata:
       labels: # these labels are pod labels
-        app: ccart
+        app: cart
         project: roboshop
         tier: app 
     spec:
